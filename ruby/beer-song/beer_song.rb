@@ -1,13 +1,16 @@
 class BeerSong
+  attr_accessor :line
+
   def verse(line)
-    line == 0 ? final_verse : default_verse(line)
+    @line = line
+    start_verse + middle_verse + final_verse
   end
 
   def verses(start, ending = 0)
     song = ""
 
     start.downto(ending) do |line|
-      song << song_verse(line)
+      song << verse(line) + "\n"
     end
 
     song
@@ -15,30 +18,38 @@ class BeerSong
 
   private
 
+  def start_verse
+    "#{bottles.capitalize} of beer on the wall, #{bottles} of beer.\n"
+  end
+
+  def middle_verse
+    if line == 0
+      "Go to the store and buy some more, "
+    else
+      "Take #{pluralizer} down and pass it around, "
+    end
+  end
+
   def final_verse
-    "No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n"
+    "#{bottles(next_bottle)} of beer on the wall.\n"
   end
 
-  def default_verse(line)
-    "#{bottles(line)} of beer on the wall, #{bottles(line)} of beer.\nTake #{pluralizer(line)} down and pass it around, #{bottles(line - 1)} of beer on the wall.\n"
-  end
-
-  def song_verse(line)
-    verse(line) + "\n"
-  end
-
-  def pluralizer(line)
+  def pluralizer
     line == 1 ? "it" : "one"
   end
 
-  def bottles(quantity)
-    case quantity
+  def bottles(line = @line)
+    case line
     when 0
       "no more bottles"
     when 1
-      "#{quantity} bottle"
+      "#{line} bottle"
     else
-      "#{quantity} bottles"
+      "#{line} bottles"
     end
+  end
+
+  def next_bottle
+    line > 0 ? line - 1 : 99
   end
 end
