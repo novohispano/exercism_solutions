@@ -22,23 +22,23 @@ class WordsTest < MiniTest::Unit::TestCase
     assert_equal counts, words.count
   end
 
-  def test_ignore_punctuation
-    words = Words.new("car : carpet as java : javascript!!&@$%^&")
-    counts = {"car"=>1, "carpet"=>1, "as"=>1, "java"=>1, "javascript"=>1}
-    assert_equal counts, words.count
-  end
+  # def test_ignore_punctuation
+  #   words = Words.new("car : carpet as java : javascript!!&@$%^&")
+  #   counts = {"car"=>1, "carpet"=>1, "as"=>1, "java"=>1, "javascript"=>1}
+  #   assert_equal counts, words.count
+  # end
 
-  def test_include_numbers
-    words = Words.new("testing, 1, 2 testing")
-    counts = {"testing" => 2, "1" => 1, "2" => 1}
-    assert_equal counts, words.count
-  end
+  # def test_include_numbers
+  #   words = Words.new("testing, 1, 2 testing")
+  #   counts = {"testing" => 2, "1" => 1, "2" => 1}
+  #   assert_equal counts, words.count
+  # end
 
-  def test_normalize_case
-    words = Words.new("go Go GO")
-    counts = {"go" => 3}
-    assert_equal counts, words.count
-  end
+  # def test_normalize_case
+  #   words = Words.new("go Go GO")
+  #   counts = {"go" => 3}
+  #   assert_equal counts, words.count
+  # end
 
 end
 
