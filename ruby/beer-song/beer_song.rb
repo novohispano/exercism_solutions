@@ -1,9 +1,9 @@
-class Beer
+class BeerSong
   def verse(line)
     line == 0 ? final_verse : default_verse(line)
   end
 
-  def sing(start, ending = 0)
+  def verses(start, ending = 0)
     song = ""
 
     start.downto(ending) do |line|
