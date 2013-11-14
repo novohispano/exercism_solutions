@@ -1,55 +1,64 @@
 class BeerSong
-  attr_accessor :line
-
-  def verse(line)
-    @line = line
-    start_verse + middle_verse + final_verse
+  def verse(number)
+    Verse.new(number).verse
   end
 
   def verses(start, ending = 0)
     song = ""
 
-    start.downto(ending) do |line|
-      song << verse(line) + "\n"
+    start.downto(ending) do |number|
+      song << verse(number) + "\n"
     end
 
     song
   end
+end
+
+class Verse
+  attr_reader :number
+
+  def initialize(number)
+    @number = number
+  end
+
+  def verse
+    start_stanza + middle_stanza + final_stanza
+  end
 
   private
 
-  def start_verse
+  def start_stanza
     "#{bottles.capitalize} of beer on the wall, #{bottles} of beer.\n"
   end
 
-  def middle_verse
-    if line == 0
+  def middle_stanza
+    if number == 0
       "Go to the store and buy some more, "
     else
       "Take #{pluralizer} down and pass it around, "
     end
   end
 
-  def final_verse
+  def final_stanza
     "#{bottles(next_bottle)} of beer on the wall.\n"
   end
 
   def pluralizer
-    line == 1 ? "it" : "one"
+    number == 1 ? "it" : "one"
   end
 
-  def bottles(line = @line)
-    case line
+  def bottles(number = @number)
+    case number
     when 0
       "no more bottles"
     when 1
-      "#{line} bottle"
+      "#{number} bottle"
     else
-      "#{line} bottles"
+      "#{number} bottles"
     end
   end
 
   def next_bottle
-    line > 0 ? line - 1 : 99
+    number > 0 ? number - 1 : 99
   end
 end
