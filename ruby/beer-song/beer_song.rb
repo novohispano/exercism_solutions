@@ -1,6 +1,6 @@
 class BeerSong
   def verse(number)
-    Verse.new(number).verse
+    Verse.new(number).to_s
   end
 
   def verses(start, ending = 0)
@@ -21,7 +21,7 @@ class Verse
     @number = number
   end
 
-  def verse
+  def to_s
     start_stanza + middle_stanza + final_stanza
   end
 
@@ -40,14 +40,34 @@ class Verse
   end
 
   def final_stanza
-    "#{bottles(next_bottle)} of beer on the wall.\n"
+    "#{remainder_bottles} of beer on the wall.\n"
   end
 
   def pluralizer
     number == 1 ? "it" : "one"
   end
 
-  def bottles(number = @number)
+  def remainder_bottles
+    Bottle.new(next_number).to_s
+  end
+
+  def bottles
+    Bottle.new(number).to_s
+  end
+
+  def next_number
+    number == 0 ? 99 : number - 1
+  end
+end
+
+class Bottle
+  attr_reader :number
+
+  def initialize(number)
+    @number = number
+  end
+
+  def to_s
     case number
     when 0
       "no more bottles"
@@ -56,9 +76,5 @@ class Verse
     else
       "#{number} bottles"
     end
-  end
-
-  def next_bottle
-    number > 0 ? number - 1 : 99
   end
 end
